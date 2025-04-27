@@ -51,4 +51,16 @@ io.on("connection", (socket) => {
       mySocket: socketId,
     });
   });
+
+  socket.on("sendOffer", (payload) => {
+    const { to, offer } = payload;
+
+    io.to(to).emit("incomingOffer", { from: socket.id, offer });
+  });
+
+  socket.on("sendAnswer", (payload) => {
+    const { to, ans } = payload;
+    console.log("answer sending", ans);
+    io.to(to).emit("ansAccepted", { from: socket.id, ans });
+  });
 });
