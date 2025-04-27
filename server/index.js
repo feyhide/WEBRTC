@@ -36,7 +36,19 @@ io.on("connection", (socket) => {
     io.to(room).emit("user:joined", { name, id: socketId });
     io.to(room).emit("user:joined", { name: me, id: socket.id });
     socket.join(room);
-    io.to(socket.id).emit("room:join", { me, name, room });
-    io.to(socketId).emit("room:join", { me: name, name: me, room });
+    io.to(socket.id).emit("room:join", {
+      me,
+      name,
+      room,
+      mySocket: socket.id,
+      otherSocket: socketId,
+    });
+    io.to(socketId).emit("room:join", {
+      me: name,
+      name: me,
+      room,
+      otherSocket: socket.id,
+      mySocket: socketId,
+    });
   });
 });

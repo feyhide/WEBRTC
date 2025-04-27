@@ -40,8 +40,8 @@ const Lobby = () => {
 
   const handleJoinRoom = useCallback(
     (data) => {
-      const { room } = data;
-      navigate(`/room/${room}`);
+      const { room, mySocket, otherSocket } = data;
+      navigate(`/room/${room}-${mySocket}-${otherSocket}`);
     },
     [navigate]
   );
